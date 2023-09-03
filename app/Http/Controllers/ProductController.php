@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Http\Request;
 use App\Product;
 use App\User;
+use App\Events\ProductCreated;
+use App\Order;
+
 use Auth;
 class ProductController extends Controller
 {
@@ -15,8 +19,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products=Product::all();
-        return view('products.allproducts')->with('products',$products);
+        \Event::dispatch(new ProductCreated());
+
+        $products= cache ('products', function()
+    {
+        return Product::get();
+    });
+ 
+        return view('products.allproducts', ['products'=>$products]);
     }
 
     /**
@@ -28,7 +38,7 @@ class ProductController extends Controller
     {
         //
         return view('products.addproduct');
-        
+
     }
 
     /**
@@ -44,7 +54,11 @@ class ProductController extends Controller
         $product->name=$request->name;
         $product->description=$request->description;
         $product->price=$request->price;
-        $product->user_id=$user->id;
+        $product->priceafter=$request->price;
+        $product->amount=$request->amount;
+        $product->gender=$request->gender;
+        $product->type=$request->type;
+
 
         if($request->hasFile('image')){
             // Get filename with the extension
@@ -62,7 +76,7 @@ class ProductController extends Controller
            }
            $product->image=$fileNameToStore;
            $product->save();
-           return redirect('/products');      
+           return redirect('/products');
     }
 
     /**
@@ -72,11 +86,8 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    { 
-        // dd(5);
-        $product=Product::find($id);
-        return view('products.show')->with('product',$product);
-        //
+    {
+
     }
 
     /**
@@ -88,8 +99,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         //
-        $product=Product::find($id);
-        return view('products.editproduct')->with('product',$product);
+        $order=Order::find($id);
+        return view('products.editproduct')->with('order',$order);
     }
 
     /**
@@ -99,37 +110,15 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-         
-        // 
-        
-        $user=Auth::user();
-        $product=Product::find($id);
-        $product->name=$request->name;
-        $product->description=$request->description;
-        $product->price=$request->price;
-        $product->user_id=$user->id;
+    public function updateorder( Request $request) {
+        //dd($request);
+        $order=Order::where('id',$request->id)->first();
+        $order->name=$order->name;
+        $order->num=$request->size;
+        $order->save();
+        return redirect('/myproduct')->with('success','Product successfully update.');
 
-        if($request->hasFile('image')){
-            // Get filename with the extension
-            $filenameWithExt = $request->file('image')->getClientOriginalName();
-            // Get just filename
-            $filename = pathinfo($filenameWithExt,PATHINFO_FILENAME);
-            // Get just ext
-            $extension = $request->file('image')->getClientOriginalExtension();
-            // FileName to store
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            //Upload Image
-            $path = $request->file('image')->storeAs('public/product_images',$fileNameToStore);
-        } else {
-               $fileNameToStore = $product->image;
-           }
-           $product->image=$fileNameToStore;
-           $product->save();
-           $products=Product::where('user_id',$user->id)->get();
-           return redirect('/myproduct')->with('products',$products)->with('success','product updated')  ;   
-    }  
+        }
 
     /**
      * Remove the specified resource from storage.
@@ -137,15 +126,20 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) 
+    public function destroy($id)
 
-    { 
-        $product=Product::find($id);
-        Storage::delete('public/product_images/',$product->image);
-        $product->delete();
-        $user=Auth::user();
-        $products=Product::where('user_id',$user->id)->get();
-        return redirect('/myproduct')->with('products',$products)->with('success','product deleted')  ;   
-        //
+    {
+
     }
+    public function delete($id)
+
+    {
+        $prud=Order::find($id);
+
+        $prud->delete();
+
+        $products=Product::all();
+        return redirect('/myproduct')->with('success','Product successfully delete.');
+    }
+
 }

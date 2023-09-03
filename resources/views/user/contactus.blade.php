@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('content') 
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +15,7 @@
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -27,11 +27,7 @@
     <link href="css/style1.css" rel="stylesheet">
 </head>
 <body>
-<br>
-<br>
-<br>
-
-
+    
   <div class="container-fluid pt-5">
     <div class="text-center mb-4">
         <h2 class="section-title px-5"><span class="px-2">Contact For Any Question</span></h2>
@@ -41,6 +37,7 @@
             <div class="contact-form">
                 <div id="success"></div>
                 <form action="/send" id="contactForm" method="post" novalidate="novalidate">
+                    @csrf
                     <div class="control-group">
                         <input type="text" class="form-control" id="name" placeholder="Your Name"
                             required="required" data-validation-required-message="Please enter your name" />
@@ -71,18 +68,18 @@
         </div>
         <div class="col-lg-5 mb-5">
             <h5 class="font-weight-semi-bold mb-3">Get In Touch</h5>
-            <p>Justo sed diam ut sed amet duo amet lorem amet stet sea ipsum, sed duo amet et. Est elitr dolor elitr erat sit sit. Dolor diam et erat clita ipsum justo sed.</p>
+            <p>We will be happy to communicate with us ... by sending us a message or visiting one of our stores in the following locations : </p>
             <div class="d-flex flex-column mb-3">
                 <h5 class="font-weight-semi-bold mb-3">Store 1</h5>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
-                <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Hanano Street, Lattakia , SYRIA</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>ayakhirbek@gmail.com</p>
+                <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>+963 987654321 </p>
             </div>
             <div class="d-flex flex-column">
                 <h5 class="font-weight-semi-bold mb-3">Store 2</h5>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
-                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Alhamraaa Street, Damascus , SYRIA</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>marwashaban@gmail.com</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+963 987654321</p>
             </div>
         </div>
     </div>
@@ -90,9 +87,9 @@
 <!-- Contact End -->
 
 
-  
+
 </body>
 
 
 </html>
-@endsection 
+@endsection

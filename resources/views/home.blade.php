@@ -32,7 +32,7 @@
               <h2>Welcome to <span>Our Website</span></h2>
               <p>Here are all the modern fashion ... and what a woman needs to be distinguished and show her unique beauty with the latest brands and modern clothes that suit all tastes ...
                 You will get everything you want and suitable for your unique taste . </p>
-              {{-- <div class="text-center"><a href="" class="btn-get-started">Read More</a></div> --}}
+              <div class="text-center"><a href="{{ url('/homee') }}" class="btn-get-started">Shop now </a></div>
             </div>
           </div>
         </div>
@@ -46,6 +46,7 @@
                 Suggestions for your style and what you usually wear...
                 It will make it easier for you to find the right pieces for you and what you love and suitable for you.</p>
               {{-- <div class="text-center"><a href="" class="btn-get-started">Read More</a></div> --}}
+              <div class="text-center"><a href="{{ url('/about') }}" class="btn-get-started"> about </a></div>
             </div>
           </div>
         </div>
@@ -57,6 +58,7 @@
               <h2>Your opinion is important to us</h2>
               <p>Your opinion of the products that we display on the site is very important to us ... and your continuous evaluation of our application in the store helps us to continue and display the products that suit you and make you unique always.</p>
               {{-- <div class="text-center"><a href="" class="btn-get-started">Read More</a></div> --}}
+              <div class="text-center"><a href="{{ url('/contactus') }}" class="btn-get-started">Contact us</a></div>
             </div>
           </div>
         </div>
